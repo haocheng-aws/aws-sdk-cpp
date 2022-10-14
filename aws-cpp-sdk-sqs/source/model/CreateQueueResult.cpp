@@ -4,16 +4,15 @@
  */
 
 #include <aws/sqs/model/CreateQueueResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
-#include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/UnreferencedParam.h>
 
 #include <utility>
 
 using namespace Aws::SQS::Model;
-using namespace Aws::Utils::Xml;
-using namespace Aws::Utils::Logging;
+using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 using namespace Aws;
 
@@ -21,34 +20,21 @@ CreateQueueResult::CreateQueueResult()
 {
 }
 
-CreateQueueResult::CreateQueueResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
+CreateQueueResult::CreateQueueResult(const Aws::AmazonWebServiceResult<JsonValue>& result)
 {
   *this = result;
 }
 
-CreateQueueResult& CreateQueueResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
+CreateQueueResult& CreateQueueResult::operator =(const Aws::AmazonWebServiceResult<JsonValue>& result)
 {
-  const XmlDocument& xmlDocument = result.GetPayload();
-  XmlNode rootNode = xmlDocument.GetRootElement();
-  XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "CreateQueueResult"))
+  JsonView jsonValue = result.GetPayload().View();
+  if(jsonValue.ValueExists("QueueUrl"))
   {
-    resultNode = rootNode.FirstChild("CreateQueueResult");
+    m_queueUrl = jsonValue.GetString("QueueUrl");
+
   }
 
-  if(!resultNode.IsNull())
-  {
-    XmlNode queueUrlNode = resultNode.FirstChild("QueueUrl");
-    if(!queueUrlNode.IsNull())
-    {
-      m_queueUrl = Aws::Utils::Xml::DecodeEscapedXmlText(queueUrlNode.GetText());
-    }
-  }
 
-  if (!rootNode.IsNull()) {
-    XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
-    m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::SQS::Model::CreateQueueResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
-  }
+
   return *this;
 }

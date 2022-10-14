@@ -37,7 +37,6 @@ namespace Model
     DeduplicationScope,
     FifoThroughputLimit,
     RedriveAllowPolicy,
-    SqsManagedSseEnabled,
     SentTimestamp,
     ApproximateFirstReceiveTimestamp,
     ApproximateReceiveCount,

@@ -4,16 +4,15 @@
  */
 
 #include <aws/sqs/model/DeleteMessageBatchResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
-#include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/UnreferencedParam.h>
 
 #include <utility>
 
 using namespace Aws::SQS::Model;
-using namespace Aws::Utils::Xml;
-using namespace Aws::Utils::Logging;
+using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 using namespace Aws;
 
@@ -21,51 +20,33 @@ DeleteMessageBatchResult::DeleteMessageBatchResult()
 {
 }
 
-DeleteMessageBatchResult::DeleteMessageBatchResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
+DeleteMessageBatchResult::DeleteMessageBatchResult(const Aws::AmazonWebServiceResult<JsonValue>& result)
 {
   *this = result;
 }
 
-DeleteMessageBatchResult& DeleteMessageBatchResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
+DeleteMessageBatchResult& DeleteMessageBatchResult::operator =(const Aws::AmazonWebServiceResult<JsonValue>& result)
 {
-  const XmlDocument& xmlDocument = result.GetPayload();
-  XmlNode rootNode = xmlDocument.GetRootElement();
-  XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "DeleteMessageBatchResult"))
+  JsonView jsonValue = result.GetPayload().View();
+  if(jsonValue.ValueExists("Successful"))
   {
-    resultNode = rootNode.FirstChild("DeleteMessageBatchResult");
-  }
-
-  if(!resultNode.IsNull())
-  {
-    XmlNode successfulNode = resultNode.FirstChild("DeleteMessageBatchResultEntry");
-    if(!successfulNode.IsNull())
+    Array<JsonView> successfulJsonList = jsonValue.GetArray("Successful");
+    for(unsigned successfulIndex = 0; successfulIndex < successfulJsonList.GetLength(); ++successfulIndex)
     {
-      XmlNode deleteMessageBatchResultEntryMember = successfulNode;
-      while(!deleteMessageBatchResultEntryMember.IsNull())
-      {
-        m_successful.push_back(deleteMessageBatchResultEntryMember);
-        deleteMessageBatchResultEntryMember = deleteMessageBatchResultEntryMember.NextNode("DeleteMessageBatchResultEntry");
-      }
-
-    }
-    XmlNode failedNode = resultNode.FirstChild("BatchResultErrorEntry");
-    if(!failedNode.IsNull())
-    {
-      XmlNode batchResultErrorEntryMember = failedNode;
-      while(!batchResultErrorEntryMember.IsNull())
-      {
-        m_failed.push_back(batchResultErrorEntryMember);
-        batchResultErrorEntryMember = batchResultErrorEntryMember.NextNode("BatchResultErrorEntry");
-      }
-
+      m_successful.push_back(successfulJsonList[successfulIndex].AsObject());
     }
   }
 
-  if (!rootNode.IsNull()) {
-    XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
-    m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::SQS::Model::DeleteMessageBatchResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+  if(jsonValue.ValueExists("Failed"))
+  {
+    Array<JsonView> failedJsonList = jsonValue.GetArray("Failed");
+    for(unsigned failedIndex = 0; failedIndex < failedJsonList.GetLength(); ++failedIndex)
+    {
+      m_failed.push_back(failedJsonList[failedIndex].AsObject());
+    }
   }
+
+
+
   return *this;
 }

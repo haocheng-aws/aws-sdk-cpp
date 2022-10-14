@@ -41,7 +41,6 @@ namespace Aws
         static const int DeduplicationScope_HASH = HashingUtils::HashString("DeduplicationScope");
         static const int FifoThroughputLimit_HASH = HashingUtils::HashString("FifoThroughputLimit");
         static const int RedriveAllowPolicy_HASH = HashingUtils::HashString("RedriveAllowPolicy");
-        static const int SqsManagedSseEnabled_HASH = HashingUtils::HashString("SqsManagedSseEnabled");
         static const int SentTimestamp_HASH = HashingUtils::HashString("SentTimestamp");
         static const int ApproximateFirstReceiveTimestamp_HASH = HashingUtils::HashString("ApproximateFirstReceiveTimestamp");
         static const int ApproximateReceiveCount_HASH = HashingUtils::HashString("ApproximateReceiveCount");
@@ -135,10 +134,6 @@ namespace Aws
           {
             return QueueAttributeName::RedriveAllowPolicy;
           }
-          else if (hashCode == SqsManagedSseEnabled_HASH)
-          {
-            return QueueAttributeName::SqsManagedSseEnabled;
-          }
           else if (hashCode == SentTimestamp_HASH)
           {
             return QueueAttributeName::SentTimestamp;
@@ -211,8 +206,6 @@ namespace Aws
             return "FifoThroughputLimit";
           case QueueAttributeName::RedriveAllowPolicy:
             return "RedriveAllowPolicy";
-          case QueueAttributeName::SqsManagedSseEnabled:
-            return "SqsManagedSseEnabled";
           case QueueAttributeName::SentTimestamp:
             return "SentTimestamp";
           case QueueAttributeName::ApproximateFirstReceiveTimestamp:
