@@ -6,6 +6,7 @@
 #pragma once
 #include <aws/sqs/SQS_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/sqs/model/ResponseMetadata.h>
 #include <aws/sqs/model/Message.h>
 #include <utility>
 
@@ -54,9 +55,27 @@ namespace Model
     
     inline ReceiveMessageResult& AddMessages(Message&& value) { m_messages.push_back(std::move(value)); return *this; }
 
+
+    
+    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
+
+    
+    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
+
+    
+    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
+
+    
+    inline ReceiveMessageResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
+
+    
+    inline ReceiveMessageResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
+
   private:
 
     Aws::Vector<Message> m_messages;
+
+    ResponseMetadata m_responseMetadata;
   };
 
 } // namespace Model

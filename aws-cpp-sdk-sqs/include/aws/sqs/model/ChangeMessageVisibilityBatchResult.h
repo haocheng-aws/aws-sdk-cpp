@@ -6,6 +6,7 @@
 #pragma once
 #include <aws/sqs/SQS_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/sqs/model/ResponseMetadata.h>
 #include <aws/sqs/model/ChangeMessageVisibilityBatchResultEntry.h>
 #include <aws/sqs/model/BatchResultErrorEntry.h>
 #include <utility>
@@ -77,11 +78,29 @@ namespace Model
     
     inline ChangeMessageVisibilityBatchResult& AddFailed(BatchResultErrorEntry&& value) { m_failed.push_back(std::move(value)); return *this; }
 
+
+    
+    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
+
+    
+    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
+
+    
+    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
+
+    
+    inline ChangeMessageVisibilityBatchResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
+
+    
+    inline ChangeMessageVisibilityBatchResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
+
   private:
 
     Aws::Vector<ChangeMessageVisibilityBatchResultEntry> m_successful;
 
     Aws::Vector<BatchResultErrorEntry> m_failed;
+
+    ResponseMetadata m_responseMetadata;
   };
 
 } // namespace Model

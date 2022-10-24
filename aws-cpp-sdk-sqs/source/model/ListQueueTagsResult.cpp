@@ -8,6 +8,7 @@
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/UnreferencedParam.h>
+#include <aws/core/utils/memory/stl/AWSStringStream.h>
 
 #include <utility>
 
@@ -37,6 +38,13 @@ ListQueueTagsResult& ListQueueTagsResult::operator =(const Aws::AmazonWebService
     }
   }
 
+
+  const auto& headers = result.GetHeaderValueCollection();
+  const auto& responseMetadataIter = headers.find("x-amzn-requestid");
+  if(responseMetadataIter != headers.end())
+  {
+     m_responseMetadata.SetRequestId(responseMetadataIter->second);
+  }
 
 
   return *this;

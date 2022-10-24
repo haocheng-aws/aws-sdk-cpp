@@ -7,6 +7,7 @@
 #include <aws/sqs/SQS_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/sqs/model/ResponseMetadata.h>
 #include <utility>
 
 namespace Aws
@@ -79,11 +80,29 @@ namespace Model
     
     inline ListQueuesResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
 
+
+    
+    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
+
+    
+    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
+
+    
+    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
+
+    
+    inline ListQueuesResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
+
+    
+    inline ListQueuesResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
+
   private:
 
     Aws::Vector<Aws::String> m_queueUrls;
 
     Aws::String m_nextToken;
+
+    ResponseMetadata m_responseMetadata;
   };
 
 } // namespace Model

@@ -6,6 +6,7 @@
 #pragma once
 #include <aws/sqs/SQS_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/sqs/model/ResponseMetadata.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <utility>
 
@@ -69,9 +70,27 @@ namespace Model
     
     inline ListQueueTagsResult& AddTags(const char* key, const char* value) { m_tags.emplace(key, value); return *this; }
 
+
+    
+    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
+
+    
+    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
+
+    
+    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
+
+    
+    inline ListQueueTagsResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
+
+    
+    inline ListQueueTagsResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
+
   private:
 
     Aws::Map<Aws::String, Aws::String> m_tags;
+
+    ResponseMetadata m_responseMetadata;
   };
 
 } // namespace Model

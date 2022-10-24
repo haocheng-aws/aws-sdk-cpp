@@ -6,6 +6,7 @@
 #pragma once
 #include <aws/sqs/SQS_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/sqs/model/ResponseMetadata.h>
 #include <aws/sqs/model/QueueAttributeName.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <utility>
@@ -67,9 +68,27 @@ namespace Model
     
     inline GetQueueAttributesResult& AddAttributes(const QueueAttributeName& key, const char* value) { m_attributes.emplace(key, value); return *this; }
 
+
+    
+    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
+
+    
+    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
+
+    
+    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
+
+    
+    inline GetQueueAttributesResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
+
+    
+    inline GetQueueAttributesResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
+
   private:
 
     Aws::Map<QueueAttributeName, Aws::String> m_attributes;
+
+    ResponseMetadata m_responseMetadata;
   };
 
 } // namespace Model

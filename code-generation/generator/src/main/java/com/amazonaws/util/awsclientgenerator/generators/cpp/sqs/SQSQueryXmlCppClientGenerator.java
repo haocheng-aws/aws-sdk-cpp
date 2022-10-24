@@ -26,6 +26,33 @@ public class SQSQueryXmlCppClientGenerator extends JsonCppClientGenerator {
 
     @Override
     public SdkFileEntry[] generateSourceFiles(ServiceModel serviceModel) throws Exception {
+        Shape shape = new Shape();
+        shape.setName("ResponseMetadata");
+        shape.setReferenced(true);
+        shape.setType("structure");
+
+        Shape stringShape = new Shape();
+        stringShape.setName("RequestId");
+        stringShape.setType("string");
+
+        ShapeMember stringShapeMember = new ShapeMember();
+        stringShapeMember.setShape(stringShape);
+        shape.setMembers(new HashMap<>());
+        shape.getMembers().put("RequestId", stringShapeMember);
+
+        serviceModel.getShapes().put("ResponseMetadata", shape);
+
+        ShapeMember responseMetadataMember = new ShapeMember();
+        responseMetadataMember.setShape(shape);
+        responseMetadataMember.setLocation("header");
+        responseMetadataMember.setLocationName("x-amzn-requestid");
+
+        for (Shape resultShape : serviceModel.getShapes().values()) {
+            if (resultShape.isResult()) {
+                resultShape.getMembers().put("ResponseMetadata", responseMetadataMember);
+            }
+        }
+
         Shape queueAttributeNameShape = serviceModel.getShapes().get("QueueAttributeName");
 
         //currently SQS doesn't model some values that can be returned as "members" of the QueueAttributeName enum

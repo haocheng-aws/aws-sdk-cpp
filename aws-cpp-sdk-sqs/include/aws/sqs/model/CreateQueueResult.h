@@ -6,6 +6,7 @@
 #pragma once
 #include <aws/sqs/SQS_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/sqs/model/ResponseMetadata.h>
 #include <utility>
 
 namespace Aws
@@ -53,9 +54,27 @@ namespace Model
     
     inline CreateQueueResult& WithQueueUrl(const char* value) { SetQueueUrl(value); return *this;}
 
+
+    
+    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
+
+    
+    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
+
+    
+    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
+
+    
+    inline CreateQueueResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
+
+    
+    inline CreateQueueResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
+
   private:
 
     Aws::String m_queueUrl;
+
+    ResponseMetadata m_responseMetadata;
   };
 
 } // namespace Model
